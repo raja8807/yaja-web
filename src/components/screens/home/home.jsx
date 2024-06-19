@@ -9,8 +9,8 @@ const HomeScreen = () => {
   return (
     <main>
       <BannerSection />
+      <AboutSection />
       <ProductsSection />
-      {/* <AboutSection /> */}
       <TasteSection />
     </main>
   );

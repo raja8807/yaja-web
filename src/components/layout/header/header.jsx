@@ -17,7 +17,7 @@ const Header = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
-      setScrolled(window.scrollY > 0);
+      setScrolled(window.scrollY >window.innerHeight - 100 )
     });
   }, []);
 
@@ -42,7 +42,7 @@ const Header = () => {
                 </li>
               ))}
             </ul>
-            <CustomButton>FAQ</CustomButton>
+            <CustomButton>Order Now</CustomButton>
           </nav>
 
           {/* <div>

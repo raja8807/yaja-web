@@ -4,11 +4,7 @@
   left: 0;
   width: 100vw;
   z-index: 1000;
-  // &.scrolled {
-    background-color: rgba(243, 204, 13, 0.2);
-    backdrop-filter: blur(10px);
-  // }
-
+  
   .wrap {
     display: flex;
     justify-content: space-between;
@@ -96,6 +92,21 @@
       .btn {
         display: unset;
       }
+    }
+  }
+
+  background-color: rgba(243, 204, 13, 0.2);
+  backdrop-filter: blur(10px);
+  &.scrolled {
+    background-color: transparent;
+    backdrop-filter: none;
+
+    nav{
+      display: none;
+    }
+
+    .btn {
+      display: unset;
     }
   }
 }

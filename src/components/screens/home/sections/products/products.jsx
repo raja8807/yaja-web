@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./products.module.scss";
 import { Col, Image, Row } from "react-bootstrap";
 
@@ -7,12 +7,14 @@ import CustomContainer from "@/components/ui/custom_container/custom_container";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "react-bootstrap-icons";
 import SectionHeading from "@/components/ui/section_heading/section_heading";
+import { COLORS } from "@/constants/styles";
 
 const Product = ({
   currentProduct,
   setCurrentProductIndex,
   maxLength,
   currentProductIndex,
+  int,
 }) => {
   return (
     <div className={styles.left}>
@@ -24,38 +26,42 @@ const Product = ({
           } else {
             setCurrentProductIndex((prev) => prev - 1);
           }
+          clearInterval(int.current);
         }}
       />
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ duration: 0.1 }}
-        key={currentProduct.id}
+        key={currentProduct?.id}
       >
         <div className={styles.image}>
           <Image
-            src={`/assets/flavours/${currentProduct.id}.png`}
-            alt={currentProduct.id}
+            src={`/assets/flavours/${currentProduct?.id}.png`}
+            alt={currentProduct?.id}
             fluid
           />
           <Image
-            src={`/assets/mascots/${currentProduct.mascot}.png`}
-            alt={currentProduct.mascot}
+            src={`/assets/mascots/${currentProduct?.mascot}.png`}
+            alt={currentProduct?.mascot}
             fluid
             className={styles.mascot}
           />
         </div>
       </motion.div>
-      <ArrowRight
-        className={`${styles.arrow} ${styles.rightArrow}`}
+      <div
+        id="moveRight"
         onClick={() => {
           if (currentProductIndex === maxLength - 1) {
             setCurrentProductIndex(0);
           } else {
             setCurrentProductIndex((prev) => prev + 1);
           }
+          clearInterval(int.current);
         }}
-      />
+      >
+        <ArrowRight className={`${styles.arrow} ${styles.rightArrow}`} />
+      </div>
     </div>
   );
 };
@@ -66,16 +72,19 @@ const ProductsSection = () => {
       id: "MANGO",
       name: "MANGO",
       mascot: "cheetah",
+      color: COLORS.color_mango,
     },
     {
       id: "LYCHEE",
       name: "LYCHEE",
       mascot: "wolf",
+      color: COLORS.color_lychee,
     },
     {
       id: "STRAWBERRY",
       name: "STRAWBERRY",
       mascot: "tiger",
+      color: COLORS.color_strawberry,
     },
   ];
 
@@ -90,6 +99,24 @@ const ProductsSection = () => {
   //     }
   //   });
   // });
+
+  let int = useRef();
+
+  const change = () => {
+    const btn = document.querySelector("#moveRight");
+    console.log("ok");
+    btn.click();
+  };
+
+  // useEffect(() => {
+  //   int.current = setInterval(() => {
+  //     change();
+  //   }, 5000);
+
+  //   // return () => {
+  //   //   clearInterval(int.current);
+  //   // };
+  // }, []);
 
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
 
@@ -106,13 +133,18 @@ const ProductsSection = () => {
               setCurrentProductIndex={setCurrentProductIndex}
               maxLength={PRODUCTS.length}
               currentProductIndex={currentProductIndex}
+              int={int}
             />
           </Col>
           <Col xs={12} md={6}>
             <div className={styles.right}>
               <div className={styles.desc}>
-                <h1>{currentProduct.name}</h1>
-                <br />
+                <h1>{currentProduct?.name}</h1>
+                <hr
+                  style={{
+                    backgroundColor: currentProduct?.color,
+                  }}
+                />
                 <p>
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                   Dicta error id nisi saepe sequi dignissimos ipsam voluptate.
@@ -146,7 +178,7 @@ const ProductsSection = () => {
                       >
                         <Image
                           src={`/assets/flavours/${p.id}.png`}
-                          alt={currentProduct.id}
+                          alt={currentProduct?.id}
                           width={90}
                         />
                       </div>

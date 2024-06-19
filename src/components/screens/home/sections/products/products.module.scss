@@ -75,6 +75,16 @@
       h1 {
         font-weight: 600;
         font-size: 34px;
+        margin: 0;
+      }
+
+      hr {
+        margin: 0;
+        height: 6px;
+        width: 150px;
+        opacity: 1;
+        border: none;
+        margin: 10px 0 20px 0;
       }
     }
 
@@ -104,6 +114,12 @@
 
     .right {
       text-align: center;
+
+      .desc{
+        hr{
+          margin:10px auto 20px auto;
+        }
+      }
 
       .allProducts {
         margin-top: 40px;
